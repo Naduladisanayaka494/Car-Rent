@@ -1,39 +1,58 @@
 package com.carentproject.car_rent.entity;
 
-
 import com.carentproject.car_rent.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Objects;
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
 @Data
-@Table(name="users")
-
-public class User {
+@Table(name = "users")
+public class User implements UserDetails {
      @Id
      @GeneratedValue(strategy = GenerationType.IDENTITY)
      private Long id;
+
      private String name;
      private String email;
-
-     @Override
-     public boolean equals(Object o) {
-          if (this == o) return true;
-          if (o == null || getClass() != o.getClass()) return false;
-          User user = (User) o;
-          return id.equals(user.id) && name.equals(user.name) && email.equals(user.email) && password.equals(user.password) && userRole == user.userRole;
-     }
-
-     @Override
-     public int hashCode() {
-          return Objects.hash(id, name, email, password, userRole);
-     }
-
      private String password;
+
+     @Enumerated(EnumType.STRING)
      private UserRole userRole;
 
+     @Override
+     public Collection<? extends GrantedAuthority> getAuthorities() {
+          return Collections.emptyList();  // Adjust this based on your roles/authorities implementation
+     }
 
+     @Override
+     public String getUsername() {
+          return email;
+     }
 
+     @Override
+     public boolean isAccountNonExpired() {
+          return true;
+     }
+
+     @Override
+     public boolean isAccountNonLocked() {
+          return true;
+     }
+
+     @Override
+     public boolean isCredentialsNonExpired() {
+          return true;
+     }
+
+     @Override
+     public boolean isEnabled() {
+          return true;
+     }
 }
