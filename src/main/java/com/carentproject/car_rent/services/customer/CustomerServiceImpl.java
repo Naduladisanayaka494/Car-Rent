@@ -10,7 +10,9 @@ import com.carentproject.car_rent.repository.BookACarRepository;
 import com.carentproject.car_rent.repository.CarRepository;
 import com.carentproject.car_rent.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -83,4 +85,11 @@ public class CustomerServiceImpl implements CustomerService{
         Optional<Car> optionalCar = carRepository.findById(carId);
         return optionalCar.map(Car::getCarDto).orElse(null);
     }
+
+    @Override
+    public List<BookCarDto> getBookingsByUserId(Long userId) {
+        return bookACarRepository.findAllByUserId(userId).stream().map(BookACar::getbookACarDto).collect(Collectors.toList());
+    }
+
+
 }

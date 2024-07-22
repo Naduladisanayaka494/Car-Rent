@@ -85,4 +85,8 @@ public class BookCarDto {
 
     private Long CarId;
     private Long UserId;
+
+    private String username;
+
+    private String email;
 }
