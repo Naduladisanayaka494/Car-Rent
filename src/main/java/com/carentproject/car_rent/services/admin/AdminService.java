@@ -19,5 +19,7 @@ public interface AdminService {
 
     List<BookCarDto> getBookings();
 
+    boolean changeBookingStatus(Long bookingId,String status);
+
 
 }
