@@ -91,5 +91,10 @@ public class CustomerServiceImpl implements CustomerService{
         return bookACarRepository.findAllByUserId(userId).stream().map(BookACar::getbookACarDto).collect(Collectors.toList());
     }
 
+    @Override
+    public List<BookCarDto> getBookings() {
+        return null;
+    }
+
 
 }

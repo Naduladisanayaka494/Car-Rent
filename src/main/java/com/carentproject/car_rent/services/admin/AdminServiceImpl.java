@@ -1,7 +1,10 @@
 package com.carentproject.car_rent.services.admin;
 
+import com.carentproject.car_rent.dto.BookCarDto;
 import com.carentproject.car_rent.dto.CarDto;
+import com.carentproject.car_rent.entity.BookACar;
 import com.carentproject.car_rent.entity.Car;
+import com.carentproject.car_rent.repository.BookACarRepository;
 import com.carentproject.car_rent.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService{
     private final CarRepository carRepository;
+    private final BookACarRepository bookACarRepository;
 
 
     @Override
@@ -77,5 +81,10 @@ public class AdminServiceImpl implements AdminService{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<BookCarDto> getBookings() {
+        return bookACarRepository.findAll().stream().map(BookACar::getbookACarDto).collect(Collectors.toList());
     }
 }

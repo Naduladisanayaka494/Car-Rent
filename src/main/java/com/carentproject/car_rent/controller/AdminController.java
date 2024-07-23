@@ -1,5 +1,6 @@
 package com.carentproject.car_rent.controller;
 
+import com.carentproject.car_rent.dto.BookCarDto;
 import com.carentproject.car_rent.dto.CarDto;
 import com.carentproject.car_rent.services.admin.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -57,6 +59,11 @@ public class AdminController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+    }
+
+    @GetMapping("/car/bookings")
+    public  ResponseEntity<List<BookCarDto>> getBookings(){
+        return  ResponseEntity.ok(adminService.getBookings());
     }
 
 
