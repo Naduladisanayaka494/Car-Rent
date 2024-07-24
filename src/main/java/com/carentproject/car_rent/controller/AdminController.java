@@ -2,6 +2,7 @@ package com.carentproject.car_rent.controller;
 
 import com.carentproject.car_rent.dto.BookCarDto;
 import com.carentproject.car_rent.dto.CarDto;
+import com.carentproject.car_rent.dto.SearchCarDto;
 import com.carentproject.car_rent.services.admin.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -70,11 +71,17 @@ public class AdminController {
     public ResponseEntity<?> changeBookingStatus(@PathVariable Long bookingId, @PathVariable String status) {
         boolean success = adminService.changeBookingStatus(bookingId, status);
         if (success) {
-            return ResponseEntity.ok().build(); 
+            return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/car/search")
+    public ResponseEntity<?> searchCar(@RequestBody SearchCarDto searchCarDto){
+        return ResponseEntity.ok(adminService.searchCar(searchCarDto));
+    }
+
 
 
 
