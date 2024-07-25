@@ -77,7 +77,7 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/car/search")
+    @PostMapping("/car/search")
     public ResponseEntity<?> searchCar(@RequestBody SearchCarDto searchCarDto){
         return ResponseEntity.ok(adminService.searchCar(searchCarDto));
     }
