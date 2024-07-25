@@ -2,6 +2,7 @@ package com.carentproject.car_rent.controller;
 
 import com.carentproject.car_rent.dto.BookCarDto;
 import com.carentproject.car_rent.dto.CarDto;
+import com.carentproject.car_rent.dto.SearchCarDto;
 import com.carentproject.car_rent.services.customer.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -52,4 +53,10 @@ public class CustomerController {
             return ResponseEntity.noContent().build();
         }
     }
+
+    @PostMapping("/car/search")
+    public ResponseEntity<?> searchCar(@RequestBody SearchCarDto searchCarDto){
+        return ResponseEntity.ok(customerService.searchCar(searchCarDto));
+    }
+
 }

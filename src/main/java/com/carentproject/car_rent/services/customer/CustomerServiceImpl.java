@@ -2,6 +2,8 @@ package com.carentproject.car_rent.services.customer;
 
 import com.carentproject.car_rent.dto.BookCarDto;
 import com.carentproject.car_rent.dto.CarDto;
+import com.carentproject.car_rent.dto.CarDtoListDto;
+import com.carentproject.car_rent.dto.SearchCarDto;
 import com.carentproject.car_rent.entity.BookACar;
 import com.carentproject.car_rent.entity.Car;
 import com.carentproject.car_rent.entity.User;
@@ -10,6 +12,8 @@ import com.carentproject.car_rent.repository.BookACarRepository;
 import com.carentproject.car_rent.repository.CarRepository;
 import com.carentproject.car_rent.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -94,6 +98,28 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public List<BookCarDto> getBookings() {
         return null;
+    }
+
+    @Override
+    public CarDtoListDto searchCar(SearchCarDto searchCarDto) {
+        Car car = new Car();
+        car.setBrand(searchCarDto.getBrand());
+        car.setType(searchCarDto.getType());
+        car.setTransmission(searchCarDto.getTransmission());
+        car.setColor(searchCarDto.getColor());
+
+        ExampleMatcher exampleMatcher = ExampleMatcher.matchingAll()
+                .withMatcher("brand", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+                .withMatcher("type", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+                .withMatcher("transmission", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+                .withMatcher("color", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+
+        Example<Car> carExample = Example.of(car, exampleMatcher);
+        List<Car> carList = carRepository.findAll(carExample);
+
+        CarDtoListDto carDtoListDto = new CarDtoListDto();
+        carDtoListDto.setCarDtoList(carList.stream().map(Car::getCarDto).collect(Collectors.toList()));
+        return carDtoListDto;
     }
 
 
